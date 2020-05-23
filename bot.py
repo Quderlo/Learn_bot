@@ -1,4 +1,5 @@
 import logging
+import random
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import settings
 
@@ -17,8 +18,17 @@ def talk_to_me(update, context):
 
 def greet_user(update, context):
     print('Вызван /start')
-    update.message.reply_text('Привет, юзер!')
-    update.message.reply_text('Список команд')
+    update.message.reply_text('Привет!')
+    update.message.reply_text('Список команд: \n 1) /start \n 2) /joke \n 3) /iq ')
+
+def joke_user(update, context):
+    update.message.reply_text('Знаете почему нельзя шутить про подлодку Курск?')
+    update.message.reply_text('Потому что в материале слишком много воды')
+
+
+def iq_user(update, context):
+    update.message.reply_text('Твой iq = ' + str(random.randint(1,200)))
+
 
 
 def main():
@@ -26,6 +36,8 @@ def main():
 
     dp = mybot.dispatcher
     dp.add_handler(CommandHandler("start", greet_user))
+    dp.add_handler(CommandHandler("joke", joke_user))
+    dp.add_handler(CommandHandler("iq", iq_user))
     dp.add_handler(MessageHandler(Filters.text, talk_to_me))
 
     logging.info('ВКЛ')
